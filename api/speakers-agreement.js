@@ -6,7 +6,7 @@ const generate = require("../lib/generate");
  * Reset font styles after changing family or size
  * @param {object} options
  * @param {object} options.doc PDFKit document
- * @param {object} options.config See exported function
+ * @param {object} options.config See speakersAgreement function
  */
 function resetFont({ doc, config } = options) {
   doc.font(config.font.family).fontSize(config.font.size);
@@ -16,7 +16,7 @@ function resetFont({ doc, config } = options) {
  * Add bold text immediately before following text
  * @param {object} options
  * @param {object} options.doc PDFKit document
- * @param {object} options.config See exported function
+ * @param {object} options.config See speakersAgreement function
  */
 function boldFont({ doc, config, text } = options) {
   doc.font(`${config.font.family}-Bold`).text(text, {
@@ -30,7 +30,7 @@ function boldFont({ doc, config, text } = options) {
  * Add content to PDFKit document
  * @param {object} options
  * @param {object} options.doc PDFKit document
- * @param {object} options.config See exported function
+ * @param {object} options.config See speakersAgreement function
  * @param {string} options.text Text to insert
  */
 function insertContent({ doc, config } = options) {
@@ -55,7 +55,7 @@ function insertContent({ doc, config } = options) {
   // );
 
   doc.text(
-    `The Frontend Conference Association ("FCA") is organizing 30 minutes presentations at the Front Conference Zurich event to be held 29 - 30 August 2019 (the "Event").\n
+    `The Frontend Conference Association ("FCA") is organizing ${config.duration} minutes presentations at the Front Conference Zurich event to be held ${config.date} (the "Event").\n
 This consent form (the "Consent") will serve as our agreement concerning your participation at the Event with a Presentation (the "Presentation").\n\n`
   );
 
@@ -95,7 +95,7 @@ If any third party claims that the use of the Presentation violates its rights, 
   boldFont({ doc, config, text: 6 });
 
   doc.text(
-    `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; (ii) accommodation at a hotel booked by FCA for up to 5 nights; (iii) a round trip economy class airline ticket from _______________________ to Zurich booked by FCA; and (iv) a compensation for the Presentation of 500 CHF (Swiss Francs) to be paid within 60 days after the conference, pursuant to providing an invoice to FCA’s accounting department, including wire transfer details or other means of payment.\n\n`
+    `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; (ii) accommodation at a hotel booked by FCA for up to 5 nights; (iii) a round trip economy class airline ticket from _______________________ to Zurich booked by FCA; and (iv) a compensation for the Presentation of ${config.compensation} CHF (Swiss Francs) to be paid within 60 days after the conference, pursuant to providing an invoice to FCA’s accounting department, including wire transfer details or other means of payment.\n\n`
   );
 
   boldFont({ doc, config, text: 7 });
@@ -143,10 +143,10 @@ If you must cancel your appearance at the Event, you agree that you will notify 
  * Add header to every page
  * @param {object} options
  * @param {object} options.doc PDFKit document
- * @param {object} options.config See exported function
+ * @param {object} options.config See speakersAgreement function
  */
 function insertHeader({ doc, config } = options) {
-  const text = "FRONT CONFERENCE ZURICH";
+  const text = config.title;
   const offsetY = doc.page.margins.top - 80;
   // const currentFont = doc._font.name;
   // const currentFontSize = doc._fontSize;
@@ -159,16 +159,16 @@ function insertHeader({ doc, config } = options) {
       continued: true
     });
 
-  resetFont({ doc, config });
+  doc.fontSize(config.font.size);
 
-  doc.text("\n\n29 - 30 August 2019");
+  doc.text(`\n\nFront Conference Zurich – ${config.date}`);
 }
 
 /**
  * Add footer to every page
  * @param {object} options
  * @param {object} options.doc PDFKit document
- * @param {object} options.config See exported function
+ * @param {object} options.config See speakersAgreement function
  */
 function insertFooter({ doc, pages } = options) {
   const text = `${pages.current + 1} / ${pages.total}`;
@@ -185,7 +185,8 @@ function insertFooter({ doc, pages } = options) {
  * Generate speakers agreement PDF
  * @param {string|number} options.duration Talk duration
  * @param {string|number} options.compensation Speaker compensation
- * @param {string} [options.date] Conference date
+ * @param {string} [options.date="27 - 28 August 2020"] Conference date
+ * @param {string} [options.title="Presentation Consent Form"] Title
  * @param {object} [options.meta] Added to PDF meta data
  * @param {string} [options.meta.title]
  * @param {string} [options.meta.author]
@@ -198,9 +199,10 @@ function insertFooter({ doc, pages } = options) {
 function speakersAgreement(options = {}) {
   const config = merge(
     {
-      date: "27 - 28 August 2020",
       duration: null,
       compensation: null,
+      date: "27 - 28 August 2020",
+      title: "Presentation Consent Form",
       meta: {
         title: "Presentation Consent Form",
         author: "Front Conference Zurich"

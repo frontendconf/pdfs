@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
                       <label for="date">Date</label>
                   </dt>
                   <dd>
-                      <input id="date" name="date" value="29 - 30 August 2019" required>
+                      <input id="date" name="date" value="27 - 28 August 2020" required>
                   </dd>
               </div>
               <div>
