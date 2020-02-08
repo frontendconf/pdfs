@@ -1,10 +1,17 @@
 const test = require("ava");
-const { existsSync, unlinkSync, readFileSync } = require("fs");
+const {
+  existsSync,
+  unlinkSync,
+  createWriteStream,
+  readFileSync
+} = require("fs");
+const { resolve } = require("path");
 const { Writable } = require("stream");
-const speakersAgreement = require("../lib/speakers-agreement");
+const { speakersAgreement } = require("../api/speakers-agreement");
 
-const filePath = "test.pdf";
-const contentLength = 6685;
+const filePath = resolve(__dirname, "./results/test.pdf");
+const contentLength = readFileSync(resolve(__dirname, "./fixtures/test.pdf"))
+  .length;
 
 const config = {
   duration: 30,
@@ -22,7 +29,7 @@ test("save file", async t => {
 
   const { data } = await speakersAgreement({
     ...config,
-    filePath
+    output: createWriteStream(filePath)
   });
 
   t.is(data, undefined);
@@ -40,7 +47,7 @@ test("return buffer", async t => {
 
 test("pipe to stream", async t => {
   const buffers = [];
-  const outputStream = new Writable({
+  const output = new Writable({
     write(chunk, encoding, callback) {
       buffers.push(chunk);
       callback();
@@ -49,7 +56,7 @@ test("pipe to stream", async t => {
 
   const { data } = await speakersAgreement({
     ...config,
-    outputStream
+    output
   });
 
   t.is(data, undefined);

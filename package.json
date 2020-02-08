@@ -4,23 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "micro",
-    "dev": "nodemon --exec npm start",
     "format": "prettier --write \"{*.js,lib/**/*.js}\"",
-    "test": "ava"
+    "test": "ava",
+    "now": "now"
+  },
+  "engines": {
+    "node": "12.x"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "lodash.merge": "^4.6.2",
-    "micro": "^9.3.4",
     "ow": "^0.15.1",
     "pdfkit": "^0.11.0"
   },
   "devDependencies": {
     "ava": "^3.2.0",
-    "nodemon": "^2.0.2",
+    "now": "^17.0.3",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1"
   },

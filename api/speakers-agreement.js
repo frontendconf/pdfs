@@ -1,6 +1,6 @@
 const ow = require("ow");
 const merge = require("lodash.merge");
-const generate = require("./generate");
+const generate = require("../lib/generate");
 
 /**
  * Reset font styles after changing family or size
@@ -195,7 +195,7 @@ function insertFooter({ doc, pages } = options) {
  * @param {string} [options.font.family]
  * @param {number} [options.font.size]
  */
-module.exports = (options = {}) => {
+function speakersAgreement(options = {}) {
   const config = merge(
     {
       date: "27 - 28 August 2020",
@@ -219,24 +219,14 @@ module.exports = (options = {}) => {
     options
   );
 
-  try {
-    ow(
-      config,
-      ow.object.partialShape({
-        date: ow.string.not.empty,
-        duration: ow.any(ow.string.not.empty, ow.number),
-        compensation: ow.any(ow.string.not.empty, ow.number)
-      })
-    );
-  } catch (err) {
-    const param = err.message.match(/(property|string) `(.*?)`/);
-
-    if (param) {
-      throw new Error(`Missing or invalid query parameter ${param[0]}`);
-    } else {
-      throw err;
-    }
-  }
+  ow(
+    config,
+    ow.object.partialShape({
+      date: ow.string.not.empty,
+      duration: ow.any(ow.string.not.empty, ow.number),
+      compensation: ow.any(ow.string.not.empty, ow.number)
+    })
+  );
 
   return generate({
     ...config,
@@ -244,4 +234,12 @@ module.exports = (options = {}) => {
     insertHeader,
     insertFooter
   });
+}
+
+module.exports = async (req, res) => {
+  const { query } = req;
+
+  return speakersAgreement({ output: res, ...query });
 };
+
+module.exports.speakersAgreement = speakersAgreement;

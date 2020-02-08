@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*?).pdf",
+      "destination": "/api/$1.js"
+    },
+    {
+      "source": "/",
+      "destination": "/api"
+    }
+  ]
+}
