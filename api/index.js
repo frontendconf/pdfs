@@ -4,45 +4,69 @@ module.exports = async (req, res) => {
   return res.send(`<!doctype html>
   <html lang=en>
   <head>
-      <meta charset=utf-8>
-      <title>Front Conference PDFs</title>
-      <style>
-          body {
-              font-family: sans-serif;   
-          }
-          dl {
-              max-width: 30em;
-          }
-          dl > div {
-              display: flex;
-              align-items: center;
-          }
-          dl > div + div {
-              margin-top: 0.5em;
-          }
-          dt {
-              flex-basis: 10em;
-              margin-right: 1em;
-          }
-          dd {
-              flex-grow: 1;
-              margin: 0;
-          }
-          input[type="text"],
-          input[type="date"],
-          input[type="number"],
-          input[type="email"],
-          select {
-              width: 100%;
-              box-sizing: border-box;
-              font: inherit;
-          }
-      </style>
+    <meta charset=utf-8>
+    <title>Front Conference PDFs</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 2em;
+      }
+
+      .wrapper {
+        max-width: 80em;
+        margin: 0 auto;
+      }
+
+      header {
+        margin-bottom: 2em;
+      }
+
+      dl {
+        max-width: 30em;
+      }
+      dl > div {
+        display: flex;
+        align-items: center;
+      }
+      dl > div + div {
+        margin-top: 0.5em;
+      }
+      dt {
+        flex-basis: 10em;
+        margin-right: 1em;
+      }
+      dd {
+        flex-grow: 1;
+        margin: 0;
+      }
+      input[type="text"],
+      input[type="date"],
+      input[type="number"],
+      input[type="email"],
+      select {
+        width: 100%;
+        box-sizing: border-box;
+        font: inherit;
+      }
+      button {
+        font: inherit;
+      }
+
+      footer {
+        margin-top: 5em;
+        font-size: 80%;
+      }
+    </style>
   </head>
   <body>
-      <h1>Front Conference PDFs</h1>
-      <h2>Speakers Agreement</h2>
-      <form action="/api/speakers-agreement.pdf">
+    <div class="wrapper">
+      <header>
+        <h1>Front Conference PDFs</h1>
+      </header>
+      <main>
+        <h2>Speakers Agreement</h2>
+        <form action="/api/speakers-agreement.pdf">
           <dl>
             ${speakersAgreementFields
               .map(field => {
@@ -75,18 +99,23 @@ module.exports = async (req, res) => {
                 }
 
                 return `<div>
-                    <dt>
-                        <label for="${field.name}">${field.label}</label>
-                    </dt>
-                    <dd>
-                        ${markup}
-                    </dd>
+                  <dt>
+                    <label for="${field.name}">${field.label}</label>
+                  </dt>
+                  <dd>
+                    ${markup}
+                  </dd>
                 </div>`;
               })
               .join("")}
           </dl>
           <button type="submit">Create</button>
-      </form>
+        </form>
+      </main>
+      <footer>
+        Source code: <a href="https://github.com/frontendconf/speakers-pdfs">https://github.com/frontendconf/speakers-pdfs</a>
+      </footer>
+    </div>
   </body>
   </html>`);
 };
