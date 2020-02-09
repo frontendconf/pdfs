@@ -1,3 +1,5 @@
+const { speakersAgreementFields } = require("./speakers-agreement");
+
 module.exports = async (req, res) => {
   return res.send(`<!doctype html>
   <html lang=en>
@@ -26,7 +28,10 @@ module.exports = async (req, res) => {
               flex-grow: 1;
               margin: 0;
           }
-          input,
+          input[type="text"],
+          input[type="date"],
+          input[type="number"],
+          input[type="email"],
           select {
               width: 100%;
               box-sizing: border-box;
@@ -39,33 +44,46 @@ module.exports = async (req, res) => {
       <h2>Speakers Agreement</h2>
       <form action="/api/speakers-agreement.pdf">
           <dl>
-              <div>
-                  <dt>
-                      <label for="date">Date</label>
-                  </dt>
-                  <dd>
-                      <input id="date" name="date" value="27 - 28 August 2020" required>
-                  </dd>
-              </div>
-              <div>
-                  <dt>
-                      <label for="duration">Duration [min]</label>
-                  </dt>
-                  <dd>
-                      <select id="duration" name="duration" required>
-                          <option>30</option>
-                          <option>45</option>
-                      </select>
-                  </dd>
-              </div>
-              <div>
-                  <dt>
-                      <label for="compensation">Compensation [CHF]</label>
-                  </dt>
-                  <dd>
-                      <input id="compensation" name="compensation" type="number" required>
-                  </dd>
-              </div>
+            ${speakersAgreementFields
+              .map(field => {
+                let markup;
+                switch (field.type) {
+                  case "select":
+                    markup = `<select id="${field.name}" name="${
+                      field.name
+                    }" required>
+                        ${field.options
+                          .map(
+                            option =>
+                              `<option ${
+                                option.value ? (value = `${option.value}`) : ""
+                              } ${option.selected ? "selected" : ""}>${
+                                option.label
+                              }</option>`
+                          )
+                          .join("")}
+                    </select>`;
+                    break;
+                  default:
+                    markup = `<input id="${field.name}" name="${
+                      field.name
+                    }" type="${field.type}" value="${field.value || ""}" ${
+                      ["radio", "checkbox"].includes(field.type)
+                        ? ""
+                        : "required"
+                    }>`;
+                }
+
+                return `<div>
+                    <dt>
+                        <label for="${field.name}">${field.label}</label>
+                    </dt>
+                    <dd>
+                        ${markup}
+                    </dd>
+                </div>`;
+              })
+              .join("")}
           </dl>
           <button type="submit">Create</button>
       </form>

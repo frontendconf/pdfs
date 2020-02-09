@@ -3,6 +3,50 @@ const merge = require("lodash.merge");
 const generate = require("../lib/generate");
 
 /**
+ * Get YYYY-MM-DD formatted date string
+ * @param {number} [daysFromToday=0] How many days in the future
+ * @returns {string}
+ */
+function getFormattedDate(daysFromToday = 0) {
+  let date = new Date();
+
+  if (daysFromToday) {
+    date = new Date(date.getTime() + daysFromToday * 24 * 60 * 60 * 1000);
+  }
+
+  return date.toISOString().substr(0, 10);
+}
+
+const speakersAgreementFields = [
+  {
+    label: "Deadline",
+    type: "date",
+    name: "deadline",
+    value: getFormattedDate(10)
+  },
+  {
+    label: "Duration [min]",
+    type: "select",
+    name: "duration",
+    options: [{ label: 30 }, { label: 45 }]
+  },
+  { label: "Compensation [CHF]", type: "number", name: "compensation" },
+  {
+    label: "Origin",
+    type: "select",
+    name: "origin",
+    options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Europe" }]
+  },
+  { label: "Workshop", type: "checkbox", name: "workshop", value: true },
+  {
+    label: "Contact",
+    type: "email",
+    name: "contact",
+    value: "NAME@frontconference.com"
+  }
+];
+
+/**
  * Reset font styles after changing family or size
  * @param {object} options
  * @param {object} options.doc PDFKit document
@@ -17,11 +61,19 @@ function resetFont({ doc, config } = options) {
  * @param {object} options
  * @param {object} options.doc PDFKit document
  * @param {object} options.config See speakersAgreement function
+ * @param {string} options.text
+ * @param {object} options.textOptions
  */
-function boldFont({ doc, config, text } = options) {
-  doc.font(`${config.font.family}-Bold`).text(text, {
-    continued: true
-  });
+function boldFont({ doc, config, text, textOptions } = options) {
+  doc.font(`${config.font.family}-Bold`).text(
+    text,
+    merge(
+      {
+        continued: true
+      },
+      textOptions
+    )
+  );
 
   resetFont({ doc, config });
 }
@@ -41,6 +93,7 @@ function insertContent({ doc, config } = options) {
   // Set up basic formatting
   doc.font(config.font.family);
   doc.fontSize(config.font.size);
+  doc.lineGap(3);
 
   // Allow for form elements
   doc.initForm();
@@ -48,21 +101,98 @@ function insertContent({ doc, config } = options) {
   // Add content
   doc.addPage();
 
-  // doc.text(
-  //   `Date: ${config.date}, duration: ${config.duration}, compensation: ${config.compensation}`,
-  //   doc.x,
-  //   doc.y
-  // );
+  const contentWidth =
+    doc.page.width - doc.page.margins.left - doc.page.margins.right;
+  const fieldOffset = 90;
+  const fieldWidth = contentWidth - fieldOffset;
+  const fieldHeight = 16;
+
+  doc.fillColor("red");
+
+  boldFont({
+    doc,
+    config,
+    text: `Please complete this form, make copies for your records and email it to ${config.contact} latest until ${config.deadline}.\n\n\n`,
+
+    textOptions: {
+      continued: false,
+      align: "center"
+    }
+  });
+
+  doc.fillColor("black");
 
   doc.text(
-    `The Frontend Conference Association ("FCA") is organizing ${config.duration} minutes presentations at the Front Conference Zurich event to be held ${config.date} (the "Event").\n
-This consent form (the "Consent") will serve as our agreement concerning your participation at the Event with a Presentation (the "Presentation").\n\n`
+    `The Frontend Conference Association ("FCA") is organizing presentations at the Front Conference Zurich event to be held ${config.date} (the "Event").\n
+This consent form (the "Consent") will serve as our agreement concerning your participation at the Event with a Presentation (the "Presentation").\n\n\n`
+  );
+
+  if (config.workshop) {
+    boldFont({
+      doc,
+      config,
+      text: "Workshop\n",
+      textOptions: {
+        continued: false
+      }
+    });
+
+    doc.text(
+      `You agree to give the following Workshop at the Event:\n
+Title:`
+    );
+
+    doc.formText(
+      "titleWorkshop",
+      doc.x + fieldOffset,
+      doc.y - doc.currentLineHeight(true) - 6,
+      fieldWidth,
+      fieldHeight,
+      {
+        borderColor: "red"
+      }
+    );
+
+    doc.text(
+      `Date:                   ${config.dateWorkshop}
+Duration:             8 hours\n\n\n`
+    );
+  }
+
+  boldFont({
+    doc,
+    config,
+    text: "Presentation\n",
+    textOptions: {
+      continued: false
+    }
+  });
+
+  doc.text(
+    `You agree to give the following Presentation at the Event:\n
+Title:`
+  );
+
+  doc.formText(
+    "title",
+    doc.x + fieldOffset,
+    doc.y - doc.currentLineHeight(true) - 6,
+    fieldWidth,
+    fieldHeight,
+    {
+      borderColor: "red"
+    }
+  );
+
+  doc.text(
+    `Date:                   ${config.date}
+Duration:             ${config.duration} minutes\n\n\n`
   );
 
   boldFont({ doc, config, text: 1 });
 
   doc.text(
-    `. FCA will promote your Presentation on social media, the Event’s website and other channels.
+    `. FCA will promote your Presentation on social media, the Event’s website and other channels.\n
 For this purpose, you agree to provide FCA and grant FCA the right to use Presentation outlines and supporting information, such as your name, voice, photograph, likeness and biographical data (collectively, "Supporting Information").\n\n`
   );
 
@@ -95,8 +225,32 @@ If any third party claims that the use of the Presentation violates its rights, 
   boldFont({ doc, config, text: 6 });
 
   doc.text(
-    `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; (ii) accommodation at a hotel booked by FCA for up to 5 nights; (iii) a round trip economy class airline ticket from _______________________ to Zurich booked by FCA; and (iv) a compensation for the Presentation of ${config.compensation} CHF (Swiss Francs) to be paid within 60 days after the conference, pursuant to providing an invoice to FCA’s accounting department, including wire transfer details or other means of payment.\n\n`
+    `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; ${
+      config.origin !== "Zurich"
+        ? `(ii) accommodation at a hotel booked by FCA for up to ${
+            config.origin === "Overseas" ? 5 : 3
+          } nights; (iii) a round trip economy class airline ticket from${
+            config.workshop ? `\n` : ""
+          }
+                                               to Zurich booked by FCA; and (iv)`
+        : `and (ii)`
+    } a compensation for the Presentation of ${
+      config.compensation
+    } CHF (Swiss Francs) to be paid within 60 days after the conference, pursuant to providing an invoice to FCA’s accounting department, including wire transfer details or other means of payment.\n\n`
   );
+
+  if (config.origin !== "Zurich") {
+    doc.formText(
+      "departure",
+      doc.x,
+      doc.y - 6 * doc.currentLineHeight(true) - 5,
+      150,
+      fieldHeight,
+      {
+        borderColor: "red"
+      }
+    );
+  }
 
   boldFont({ doc, config, text: 7 });
 
@@ -108,32 +262,59 @@ If you must cancel your appearance at the Event, you agree that you will notify 
   boldFont({ doc, config, text: 8 });
 
   doc.text(
-    `. This Consent contains the entire understanding between you and FCA regarding the Presentation and Supporting Information and may not be modified except in writing signed by both parties.`
+    `. This Consent contains the entire understanding between you and FCA regarding the Presentation and Supporting Information and may not be modified except in writing signed by both parties.\n\n`
   );
 
-  doc.formText("date", doc.x, doc.y + 10, 200, 20, {
-    value: "2020-02-20",
-    format: {
-      type: "date",
-      param: "yyyy-mm-dd"
-    },
-    borderColor: "green"
-  });
+  doc.text(`\nName:`);
 
-  doc.formText("title", doc.x, doc.y + 40, 200, 20, {
-    borderColor: "red"
-  });
+  doc.formText(
+    "name",
+    doc.x + fieldOffset,
+    doc.y - doc.currentLineHeight(true) - 6,
+    fieldWidth,
+    fieldHeight,
+    {
+      borderColor: "red"
+    }
+  );
 
-  doc.formText("city", doc.x, doc.y + 70, 200, 80, {
-    borderColor: "blue"
-  });
+  doc.text(`\nName (signed):`);
+
+  doc.formText(
+    "signature",
+    doc.x + fieldOffset,
+    doc.y - doc.currentLineHeight(true) - 6,
+    fieldWidth,
+    fieldHeight,
+    {
+      borderColor: "red"
+    }
+  );
+
+  doc.text(`\nDate:`);
+
+  doc.formText(
+    "date",
+    doc.x + fieldOffset,
+    doc.y - doc.currentLineHeight(true) - 6,
+    fieldWidth,
+    fieldHeight,
+    {
+      borderColor: "blue",
+      value: getFormattedDate(),
+      format: {
+        type: "date",
+        param: "yyyy-mm-dd"
+      }
+    }
+  );
 
   doc
     .fontSize(10)
     .text(
       "This Consent shall be exclusively governed by Swiss/Zurich law without regard to choice-of-law principles. Any dispute concerning the Presentation and/or Supporting Information, or arising out of or relating to this Consent, shall be resolved in the courts of Zurich, Switzerland.",
       doc.x,
-      doc.y + 170
+      doc.y + 50
     );
 
   resetFont({ doc, config });
@@ -170,10 +351,12 @@ function insertHeader({ doc, config } = options) {
  * @param {object} options.doc PDFKit document
  * @param {object} options.config See speakersAgreement function
  */
-function insertFooter({ doc, pages } = options) {
+function insertFooter({ doc, config, pages } = options) {
   const text = `${pages.current + 1} / ${pages.total}`;
   const offsetY =
     doc.page.height - doc.page.margins.bottom - doc.currentLineHeight() + 40;
+
+  resetFont({ doc, config });
 
   doc.text(text, doc.x, offsetY, {
     align: "center",
@@ -183,9 +366,13 @@ function insertFooter({ doc, pages } = options) {
 
 /**
  * Generate speakers agreement PDF
+ * @param {string} options.deadline Until when to return the form
  * @param {string|number} options.duration Talk duration
  * @param {string|number} options.compensation Speaker compensation
+ * @param {string|boolean} options.workshop Whether there will be an additional workshop
+ * @param {string} options.contact E-mail contact to return form to
  * @param {string} [options.date="27 - 28 August 2020"] Conference date
+ * @param {string} [options.dateWorkshop="26 August 2020"] Workshop date
  * @param {string} [options.title="Presentation Consent Form"] Title
  * @param {object} [options.meta] Added to PDF meta data
  * @param {string} [options.meta.title]
@@ -197,14 +384,21 @@ function insertFooter({ doc, pages } = options) {
  * @param {number} [options.font.size]
  */
 function speakersAgreement(options = {}) {
+  const title = options.workshop
+    ? "Workshop and Presentation Consent Form"
+    : "Presentation Consent Form";
   const config = merge(
     {
+      deadline: null,
       duration: null,
       compensation: null,
+      workshop: false,
+      contact: null,
       date: "27 - 28 August 2020",
-      title: "Presentation Consent Form",
+      dateWorkshop: "26 August 2020",
+      title,
       meta: {
-        title: "Presentation Consent Form",
+        title,
         author: "Front Conference Zurich"
       },
       pdf: {
@@ -221,12 +415,15 @@ function speakersAgreement(options = {}) {
     options
   );
 
+  config.workshop = config.workshop === "true";
+
   ow(
     config,
     ow.object.partialShape({
-      date: ow.string.not.empty,
+      deadline: ow.string.not.empty,
       duration: ow.any(ow.string.not.empty, ow.number),
-      compensation: ow.any(ow.string.not.empty, ow.number)
+      compensation: ow.any(ow.string.not.empty, ow.number),
+      contact: ow.string.not.empty
     })
   );
 
@@ -245,3 +442,5 @@ module.exports = async (req, res) => {
 };
 
 module.exports.speakersAgreement = speakersAgreement;
+
+module.exports.speakersAgreementFields = speakersAgreementFields;
