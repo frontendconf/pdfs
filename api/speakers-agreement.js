@@ -1,3 +1,5 @@
+const { resolve } = require("path");
+const { readFileSync } = require("fs");
 const ow = require("ow");
 const merge = require("lodash.merge");
 const generate = require("../lib/generate");
@@ -230,7 +232,7 @@ If any third party claims that the use of the Presentation violates its rights, 
         ? `(ii) accommodation at a hotel booked by FCA for up to ${
             config.origin === "Overseas" ? 5 : 3
           } nights; (iii) a round trip economy class airline ticket from${
-            config.workshop ? `\n` : ""
+            config.workshop ? "" : `\n`
           }
                                                to Zurich booked by FCA; and (iv)`
         : `and (ii)`
@@ -265,7 +267,7 @@ If you must cancel your appearance at the Event, you agree that you will notify 
     `. This Consent contains the entire understanding between you and FCA regarding the Presentation and Supporting Information and may not be modified except in writing signed by both parties.\n\n`
   );
 
-  doc.text(`\nName:`);
+  doc.text(`${config.workshop ? `\n\n\n\n` : `\n`}Name:`);
 
   doc.formText(
     "name",
@@ -328,9 +330,19 @@ If you must cancel your appearance at the Event, you agree that you will notify 
  */
 function insertHeader({ doc, config } = options) {
   const text = config.title;
-  const offsetY = doc.page.margins.top - 80;
+  let offsetY = config.pdf.margins.topHeader;
   // const currentFont = doc._font.name;
   // const currentFontSize = doc._fontSize;
+
+  if (config.logo) {
+    doc.addSVG(
+      config.logo.path,
+      (doc.page.width - config.logo.size) / 2,
+      offsetY
+    );
+
+    offsetY += config.logo.size;
+  }
 
   doc
     .font(`${config.font.family}-Bold`)
@@ -403,13 +415,18 @@ function speakersAgreement(options = {}) {
       },
       pdf: {
         margins: {
-          top: 120,
+          top: 180,
+          topHeader: 40,
           bottom: 80
         }
       },
       font: {
         family: "Helvetica",
         size: 12
+      },
+      logo: {
+        path: readFileSync(resolve(__dirname, "../public/logo.svg"), "utf8"),
+        size: 63
       }
     },
     options
