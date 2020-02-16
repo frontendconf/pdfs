@@ -30,7 +30,7 @@ const speakersAgreementFields = [
     label: "Duration [min]",
     type: "select",
     name: "duration",
-    options: [{ label: 30 }, { label: 45 }]
+    options: [{ label: 20 }, { label: 30 }, { label: 40 }, { label: 45 }]
   },
   { label: "Compensation [CHF]", type: "number", name: "compensation" },
   {
@@ -55,7 +55,10 @@ const speakersAgreementFields = [
  * @param {object} options.config See speakersAgreement function
  */
 function resetFont({ doc, config } = options) {
-  doc.font(config.font.family).fontSize(config.font.size);
+  doc
+    .font(config.font.family)
+    .fontSize(config.font.size)
+    .fillColor("black");
 }
 
 /**
@@ -109,12 +112,13 @@ function insertContent({ doc, config } = options) {
   const fieldWidth = contentWidth - fieldOffset;
   const fieldHeight = 16;
 
-  doc.fillColor("red");
+  doc.fillColor("#300888").fontSize(11);
 
   boldFont({
     doc,
     config,
-    text: `Please complete this form, make copies for your records and email it to ${config.contact} latest until ${config.deadline}.\n\n\n`,
+    text: `Please complete this form, make copies for your records and email it to
+${config.contact} latest until ${config.deadline}.\n\n\n`,
 
     textOptions: {
       continued: false,
@@ -122,7 +126,7 @@ function insertContent({ doc, config } = options) {
     }
   });
 
-  doc.fillColor("black");
+  resetFont({ doc, config });
 
   doc.text(
     `The Frontend Conference Association ("FCA") is organizing the Front Conference Zurich event to be held ${
@@ -266,7 +270,7 @@ If any third party claims that the use of the ${
       config.workshop
         ? `; (${
             config.origin !== "Zurich" ? "iv" : "iii"
-          }) 50% of the Workshop profits, with the expenses deducted from the Workshop tickets revenue including: rental of the workshop venue, lunch and refreshments for attendees, the commission to the ticket sales platform, and costs incurred with the marketing and promotion. `
+          }) 50% of the Workshop profits, with the expenses deducted from the Workshop tickets revenue including: rental of the workshop venue, lunch and refreshments for attendees, the commission to the ticket sales platform, and costs incurred with the marketing and promotion`
         : ""
     }. The financial compensation related to ${
       config.workshop ? "Workshop and " : ""
