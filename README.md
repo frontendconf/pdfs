@@ -16,3 +16,4 @@ Prerequisite: Account on [`ZEIT`](https://zeit.co/signup) so the project can be 
 - Run tests: `npm test`
 - Format code `npm format`
 - Deploy: `npm run now`
+- Alias: `npm run now alias DEPLOYMENT_ID pdfs.frontconference.com`
