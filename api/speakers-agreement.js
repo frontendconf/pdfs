@@ -37,7 +37,7 @@ const speakersAgreementFields = [
     label: "Origin",
     type: "select",
     name: "origin",
-    options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Europe" }]
+    options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Zurich" }]
   },
   { label: "Workshop", type: "checkbox", name: "workshop", value: true },
   {
