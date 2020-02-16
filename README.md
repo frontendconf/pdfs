@@ -10,6 +10,8 @@ PDFs are generated using [`PDFKit`](https://github.com/foliojs/pdfkit).
 
 ## Development
 
+Prerequisite: Account on [`ZEIT`](https://zeit.co/signup) so the project can be linked when using `now`.
+
 - Run development server: `npm run now dev`
 - Run tests: `npm test`
 - Format code `npm format`
