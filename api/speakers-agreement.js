@@ -125,8 +125,12 @@ function insertContent({ doc, config } = options) {
   doc.fillColor("black");
 
   doc.text(
-    `The Frontend Conference Association ("FCA") is organizing presentations at the Front Conference Zurich event to be held ${config.date} (the "Event").\n
-This consent form (the "Consent") will serve as our agreement concerning your participation at the Event with a Presentation (the "Presentation").\n\n\n`
+    `The Frontend Conference Association ("FCA") is organizing the Front Conference Zurich event to be held ${
+      config.date
+    } (the "Event").\n
+This consent form (the "Consent") will serve as our agreement concerning your participation at the Event with ${
+      config.workshop ? `a Workshop (the "Workshop") and ` : ""
+    }a Presentation (the "Presentation").\n\n\n`
   );
 
   if (config.workshop) {
@@ -194,21 +198,23 @@ Duration:             ${config.duration} minutes\n\n\n`
   boldFont({ doc, config, text: 1 });
 
   doc.text(
-    `. FCA will promote your Presentation on social media, the Event’s website and other channels.\n
-For this purpose, you agree to provide FCA and grant FCA the right to use Presentation outlines and supporting information, such as your name, voice, photograph, likeness and biographical data (collectively, "Supporting Information").\n\n`
+    `. FCA will promote workshops and presentations on social media, the Event’s website and other channels.\n
+For this purpose, you agree to provide FCA and grant FCA the right to use ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation outlines and supporting information, such as your name, voice, photograph, likeness and biographical data (collectively, "Supporting Information").\n\n`
   );
 
   boldFont({ doc, config, text: 2 });
 
   doc.text(
     `. FCA supports the spread of fresh ideas and practices around Technology and Design by making presentations freely and widely available to a broad audience. For this purpose, all presentations held at the Event are streamed live, and recorded for further display on FCA’s Vimeo channel, on FCA’s website or other video distribution channels.\n
-You grant FCA and other entities — e.g., broadcasters — the right to record, stream, film and photograph your Presentation at the Event and to distribute, broadcast, edit, translate or otherwise disseminate it, without any further approval from you, in whole or in part, throughout the world, in perpetuity, in any and all media now known or hereafter developed. This grant to the FCA includes, but is not limited to, the right to use the Presentation either alone or together with Supporting Information.\n\n`
+You grant FCA and other entities — e.g., broadcasters — the right to record, stream, film and photograph your Presentation at the Event and to distribute, broadcast, edit, translate or otherwise disseminate it, without any further approval from you, in whole or in part, throughout the world, in perpetuity, in any and all media now known or hereafter developed. This grant to the FCA includes, but is not limited to, the right to use the Presentation either alone or together with Supporting Information. \n\n`
   );
 
   boldFont({ doc, config, text: 3 });
 
   doc.text(
-    `. FCA encourages intelligent public debate around each presentation. Accordingly, your Presentation may be distributed under a "Creative Commons" license, which allows each distributed presentation to be re-published in noncommercial, non-derivative works, as long as the appropriate credit is given and the presentation is not edited or distorted. By signing this Consent, you acknowledge and agree that you do not object to the distribution of the Presentation by the FCA under a Creative Commons license.\n\n`
+    `. FCA encourages intelligent public debate around each presentation. Accordingly, your Presentation may be distributed under a "Creative Commons" license, which allows each distributed presentation to be re-published in noncommercial, non-derivative works, as long as appropriate credit is given and the presentation is not edited or distorted. By signing this Consent, you acknowledge and agree that you do not object to the distribution of the Presentation by the FCA under a Creative Commons license. \n\n`
   );
 
   boldFont({ doc, config, text: 4 });
@@ -220,32 +226,60 @@ You grant FCA and other entities — e.g., broadcasters — the right to record,
   boldFont({ doc, config, text: 5 });
 
   doc.text(
-    `. You affirm that: (i) you have the full power and authority to grant the rights and releases set forth in this Consent; (ii) you are the sole author of the Presentation; (iii) you own all rights to the Presentation, including, but not limited to, all copyrights and trademark rights; (iv) you will advise FCA in writing of all third-party material contained in the Presentation (to which you have not secured all necessary rights); (v) use of the Presentation as permitted by this Release will not violate the rights of any third party, and (vi) you may not revoke the rights granted in this Consent.\n
-If any third party claims that the use of the Presentation violates its rights, you agree to cooperate fully with FCA to defend against or otherwise respond to such claim.\n\n`
+    `. You affirm that: (i) you have the full power and authority to grant the rights and releases set forth in this Consent; (ii) you are the sole author of the ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation; (iii) you own all rights to the ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation, including, but not limited to, all copyrights and trademark rights; (iv) you will advise FCA in writing of all third-party material contained in the ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation (to which you have not secured all necessary rights); (v) use of the ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation as permitted by this Release will not violate the rights of any third party, and (vi) you may not revoke the rights granted in this Consent.\n
+If any third party claims that the use of the ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation violates its rights, you agree to cooperate fully with FCA to defend against or otherwise respond to such claim. \n\n`
   );
 
   boldFont({ doc, config, text: 6 });
 
+  let nights = 3;
+
+  if (config.origin === "Overseas") {
+    nights = 5;
+  }
+
+  if (config.workshop) {
+    nights += 1;
+  }
+
   doc.text(
     `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; ${
       config.origin !== "Zurich"
-        ? `(ii) accommodation at a hotel booked by FCA for up to ${
-            config.origin === "Overseas" ? 5 : 3
-          } nights; (iii) a round trip economy class airline ticket from${
+        ? `(ii) accommodation at a hotel booked by FCA for up to ${nights} nights; (iii) a round trip economy class airline ticket from${
             config.workshop ? "" : `\n`
           }
                                                to Zurich booked by FCA; and (iv)`
         : `and (ii)`
     } a compensation for the Presentation of ${
       config.compensation
-    } CHF (Swiss Francs) to be paid within 60 days after the conference, pursuant to providing an invoice to FCA’s accounting department, including wire transfer details or other means of payment.\n\n`
+    } CHF (Swiss Francs)${
+      config.workshop
+        ? `; (${
+            config.origin !== "Zurich" ? "iv" : "iii"
+          }) 50% of the Workshop profits, with the expenses deducted from the Workshop tickets revenue including: rental of the workshop venue, lunch and refreshments for attendees, the commission to the ticket sales platform, and costs incurred with the marketing and promotion. `
+        : ""
+    }. The financial compensation related to ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation will be paid to you within 60 days after the conference pursuant to providing an invoice to FCA’ s accounting department, including wire transfer details or other means of payment.\n\n`
   );
 
   if (config.origin !== "Zurich") {
     doc.formText(
       "departure",
       doc.x,
-      doc.y - 6 * doc.currentLineHeight(true) - 5,
+      doc.y -
+        (config.workshop ? 9 : 6) * doc.currentLineHeight(true) -
+        (config.workshop ? 12 : 5),
       150,
       fieldHeight,
       {
@@ -256,18 +290,34 @@ If any third party claims that the use of the Presentation violates its rights, 
 
   boldFont({ doc, config, text: 7 });
 
+  if (config.workshop) {
+    doc.text(
+      `. FCA will target selling up to 40 tickets for your Workshop. You understand that FCA cannot make any guarantees with regard to the number of Workshop tickets finally sold. Both parties have the right to cancel the workshop for less than 10 attendees. The Presentation will still be held regardless of the Workshop taking place or not.\n\n`
+    );
+
+    boldFont({ doc, config, text: 8 });
+
+    doc.text(
+      `. Shall further Workshops with private companies be organised, you agree that a separate financial agreement will be discussed with FCA.\n\n`
+    );
+
+    boldFont({ doc, config, text: 9 });
+  }
+
   doc.text(
-    `. FCA and the Event are ran by web professionals in their spare time without any financial incentive. These circumstances complicate finding replacements, if a speaker cancels their participation at the Event on a short notice, and exacerbate thereby incurred expenses.\n
-If you must cancel your appearance at the Event, you agree that you will notify FCA at least 60 days prior to the date of the first day of the conference. In the event that you fail to appear or perform pursuant to the terms of this agreement, you understand that you shall be responsible for covering the costs of the already booked flights and you shall try to help FCA find a replacement speaker of the same caliber. Shall you fail to appear or cancel later than 3 days prior to your scheduled arrival and should we not find a replacement, you shall cover the costs of the booked hotel nights. Cancellations due to illness, accident or attenuating circumstances are exempted.\n\n`
+    `. FCA and the Event are ran by web professionals in their spare time without any financial incentive. These circumstances complicate finding replacements, if a speaker cancels their participation at the Event on a short notice, and exacerbate thereby incurred expenses.\n\
+If you must cancel your appearance at the Event, you agree that you will notify FCA at least 60 days prior to the date of the first day of the conference. In the event that you fail to appear or perform pursuant to the terms of this agreement, you understand that you shall be responsible for payment of all damages, costs and expenses incurred by FCA by reason of such failure to appear. Cancellations due to illness or accident are exempted.\n\n`
   );
 
-  boldFont({ doc, config, text: 8 });
+  boldFont({ doc, config, text: config.workshop ? 10 : 8 });
 
   doc.text(
-    `. This Consent contains the entire understanding between you and FCA regarding the Presentation and Supporting Information and may not be modified except in writing signed by both parties.\n\n`
+    `. This Consent contains the entire understanding between you and FCA regarding the ${
+      config.workshop ? "Workshop and " : ""
+    }Presentation and Supporting Information and may not be modified except in a writing signed by both parties.\n\n`
   );
 
-  doc.text(`${config.workshop ? `\n\n\n\n` : `\n`}Name:`);
+  doc.text(`\nName:`);
 
   doc.formText(
     "name",
@@ -314,7 +364,9 @@ If you must cancel your appearance at the Event, you agree that you will notify 
   doc
     .fontSize(10)
     .text(
-      "This Consent shall be exclusively governed by Swiss/Zurich law without regard to choice-of-law principles. Any dispute concerning the Presentation and/or Supporting Information, or arising out of or relating to this Consent, shall be resolved in the courts of Zurich, Switzerland.",
+      `This Consent shall be exclusively governed by Swiss/Zurich law without regard to choice-of-law principles. Any dispute concerning the ${
+        config.workshop ? "Workshop and " : ""
+      }Presentation and/or Supporting Information, or arising out of or relating to this Consent, shall be resolved in the courts of Zurich, Switzerland.`,
       doc.x,
       doc.y + 50
     );
