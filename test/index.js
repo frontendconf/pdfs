@@ -14,7 +14,7 @@ const contentLength = readFileSync(resolve(__dirname, "./fixtures/test.pdf"))
   .length;
 
 const config = {
-  deadline: "2020-02-20",
+  deadline: "2021-07-31",
   duration: 30,
   compensation: 1000,
   contact: "thomas@frontconference.com"
