@@ -30,9 +30,9 @@ const speakersAgreementFields = [
     label: "Duration [min]",
     type: "select",
     name: "duration",
-    options: [{ label: 20 }, { label: 30 }, { label: 40 }, { label: 45 }]
+    options: [{ label: 20 }, { label: 30 }, { label: 40 }, { label: 45, relation: ['workshopOnly', ''] }]
   },
-  { label: "Compensation [CHF]", type: "number", name: "compensation" },
+  { label: "Compensation [CHF]", type: "number", name: "compensation", relation: ['workshopOnly', ''] },
   {
     label: "Origin",
     type: "select",
@@ -40,6 +40,8 @@ const speakersAgreementFields = [
     options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Zurich" }]
   },
   { label: "Workshop", type: "checkbox", name: "workshop", value: true },
+  { label: "Half-day workshop", type: "checkbox", name: "workshopHalfDay", value: true, relation: ['workshop', 'true'] },
+  { label: "Workshop only (no talk)", type: "checkbox", name: "workshopOnly", value: true, relation: ['workshop', 'true'] },
   {
     label: "Contact",
     type: "email",
@@ -133,8 +135,8 @@ ${config.contact} latest until ${config.deadline}.\n\n\n`,
       config.date
     } (the "Event").\n
 This consent form (the "Consent") will serve as our agreement concerning your participation at the Event with ${
-      config.workshop ? `a Workshop (the "Workshop") and ` : ""
-    }a Presentation (the "Presentation").\n\n\n`
+      config.workshop ? `a Workshop (the "Workshop")${config.workshopOnly ? '' : ` and `}` : ""
+    }${config.workshopOnly ? '' : `a Presentation (the "Presentation")`}.\n\n\n`
   );
 
   if (config.workshop) {
@@ -165,39 +167,41 @@ Title:`
 
     doc.text(
       `Date:                   ${config.dateWorkshop}
-Duration:             8 hours\n\n\n`
+Duration:             ${config.workshopHalfDay ? 4 : 8} hours\n\n\n`
     );
   }
 
-  boldFont({
-    doc,
-    config,
-    text: "Presentation\n",
-    textOptions: {
-      continued: false
-    }
-  });
+  if (!config.workshopOnly) {
+    boldFont({
+      doc,
+      config,
+      text: "Presentation\n",
+      textOptions: {
+        continued: false
+      }
+    });
 
-  doc.text(
-    `You agree to give the following Presentation at the Event:\n
+    doc.text(
+      `You agree to give the following Presentation at the Event:\n
 Title:`
-  );
+    );
 
-  doc.formText(
-    "title",
-    doc.x + fieldOffset,
-    doc.y - doc.currentLineHeight(true) - 6,
-    fieldWidth,
-    fieldHeight,
-    {
-      borderColor: "red"
-    }
-  );
+    doc.formText(
+      "title",
+      doc.x + fieldOffset,
+      doc.y - doc.currentLineHeight(true) - 6,
+      fieldWidth,
+      fieldHeight,
+      {
+        borderColor: "red"
+      }
+    );
 
-  doc.text(
-    `Date:                   ${config.date}
+    doc.text(
+      `Date:                   ${config.date}
 Duration:             ${config.duration} minutes\n\n\n`
-  );
+    );
+  }
 
   boldFont({ doc, config, text: 1 });
 
@@ -495,7 +499,7 @@ function speakersAgreement(options = {}) {
     ow.object.partialShape({
       deadline: ow.string.not.empty,
       duration: ow.any(ow.string.not.empty, ow.number),
-      compensation: ow.any(ow.string.not.empty, ow.number),
+      compensation: ow.any(ow.string.not.empty, ow.number, ow.null),
       contact: ow.string.not.empty
     })
   );

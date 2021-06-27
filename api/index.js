@@ -75,7 +75,7 @@ module.exports = async (req, res) => {
                   case "select":
                     markup = `<select id="${field.name}" name="${
                       field.name
-                    }" required>
+                    }" required${field.relation ? ` data-relation='${JSON.stringify(field.relation)}'` : ''}>
                         ${field.options
                           .map(
                             option =>
@@ -95,7 +95,7 @@ module.exports = async (req, res) => {
                       ["radio", "checkbox"].includes(field.type)
                         ? ""
                         : "required"
-                    }>`;
+                    }${field.relation ? ` data-relation='${JSON.stringify(field.relation)}'` : ''}>`;
                 }
 
                 return `<div>
@@ -116,6 +116,27 @@ module.exports = async (req, res) => {
         Source code: <a href="https://github.com/frontendconf/speakers-pdfs">https://github.com/frontendconf/speakers-pdfs</a>
       </footer>
     </div>
+    <script>
+      function toggleFields(form, fields) {
+        const data = Object.fromEntries(new FormData(form));
+
+        fields.forEach(field => {
+          const [key, value] = JSON.parse(field.dataset.relation);
+          const isValid = value ? data[key] === value : !data[key];
+          
+          field.disabled = !isValid;
+        });
+      }
+  
+      const form = document.querySelector('form');
+      const fields = form.querySelectorAll('[data-relation]');
+
+      toggleFields(form, fields);
+
+      form.addEventListener('change', () => {
+        toggleFields(form, fields);
+      });
+    </script>
   </body>
   </html>`);
 };
