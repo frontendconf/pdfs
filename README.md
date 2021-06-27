@@ -10,10 +10,10 @@ PDFs are generated using [`PDFKit`](https://github.com/foliojs/pdfkit).
 
 ## Development
 
-Prerequisite: Account on [`ZEIT`](https://zeit.co/signup) so the project can be linked when using `now`.
+Prerequisite: Account on [`Vercel`](https://vercel.com) so the project can be linked when using `vercel`.
 
-- Run development server: `npm run now dev`
+- Run development server: `npx vercel dev`
 - Run tests: `npm test`
 - Format code `npm format`
-- Deploy: `npm run now`
-- Deploy to https://pdfs.frontconference.com: `npm run now -- --prod`
+- Deploy: `npx vercel`
+- Deploy to https://pdfs.frontconference.com: `npx vercel -- --prod`

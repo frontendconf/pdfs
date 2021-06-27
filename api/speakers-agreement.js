@@ -1,6 +1,6 @@
 const { resolve } = require("path");
 const { readFileSync } = require("fs");
-const ow = require("ow");
+const { default: ow } = require("ow");
 const merge = require("lodash.merge");
 const generate = require("../lib/generate");
 
