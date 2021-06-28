@@ -313,8 +313,28 @@ If any third party claims that the use of the ${
   }
 
   doc.text(
-    `. FCA and the Event are ran by web professionals in their spare time without any financial incentive. These circumstances complicate finding replacements, if a speaker cancels their participation at the Event on a short notice, and exacerbate thereby incurred expenses.\n\
-If you must cancel your appearance at the Event, you agree that you will notify FCA at least 60 days prior to the date of the first day of the conference. In the event that you fail to appear or perform pursuant to the terms of this agreement, you understand that you shall be responsible for payment of all damages, costs and expenses incurred by FCA by reason of such failure to appear. Cancellations due to illness or accident are exempted.\n\n`
+    `. FCA and the Event are ran by web professionals in their spare time without any financial incentive. These circumstances complicate finding replacements, if a speaker cancels their participation at the Event on a short notice, and exacerbate thereby incurred expenses.\n
+If you must cancel your appearance at the Event, you agree that you will notify FCA at least 60 days prior to the date of the first day of the conference. In the event that you fail to appear or perform pursuant to the terms of this agreement, you understand that you shall be responsible for payment of all damages, costs and expenses incurred by FCA by reason of such failure to appear. Cancellations due to illness or accident are exempted.\n\n`);
+
+  doc.text(
+    `If you are unable to travel for other reasons, FCA might agree on having your talk streamed. However, the compensation as specified in 6. will be reduced by up to 50%. `,
+    {
+      continued: true,
+    }
+  );
+
+  doc.text(`See official rules about entering Switzerland`, {
+    underline: true,
+    link: "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/empfehlungen-fuer-reisende/quarantaene-einreisende.html",
+    continued: true,
+  });
+
+  doc.text(` if you are traveling from abroad.\n\n`, {
+    underline: false,
+  });
+
+  doc.text(
+    `At the event, FCA requires a valid COVID certificate. It provides documentary evidence that you have had a COVID-19 vaccination, have had and recovered from the disease or have tested negative. If you are traveling by plane, the airline will most probably require the same kind of documentation. If needed, FCA will support you in receiving a COVID test in Zurich.\n\n`
   );
 
   boldFont({ doc, config, text: config.workshop ? 10 : 8 });
