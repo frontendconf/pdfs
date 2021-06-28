@@ -300,7 +300,7 @@ If any third party claims that the use of the ${
 
   if (config.workshop) {
     doc.text(
-      `. FCA will target selling up to 40 tickets for your Workshop. You understand that FCA cannot make any guarantees with regard to the number of Workshop tickets finally sold. Both parties have the right to cancel the workshop for less than 10 attendees. The Presentation will still be held regardless of the Workshop taking place or not.\n\n`
+      `. FCA will target selling up to 25 tickets for your Workshop. You understand that FCA cannot make any guarantees with regard to the number of Workshop tickets finally sold. Both parties have the right to cancel the workshop for less than 10 attendees. The Presentation will still be held regardless of the Workshop taking place or not.\n\n`
     );
 
     boldFont({ doc, config, text: 8 });
