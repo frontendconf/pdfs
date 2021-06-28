@@ -16,4 +16,4 @@ Prerequisite: Account on [`Vercel`](https://vercel.com) so the project can be li
 - Run tests: `npm test`
 - Format code `npm format`
 - Deploy: `npx vercel`
-- Deploy to https://pdfs.frontconference.com: `npx vercel -- --prod`
+- Deploy to https://pdfs.frontconference.com: `npx vercel --prod`
