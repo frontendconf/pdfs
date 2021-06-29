@@ -337,8 +337,21 @@ If you must cancel your appearance at the Event, you agree that you will notify 
     underline: false,
   });
 
+  doc.text(`FCA requires a `, {
+    continued: true,
+  });
+
+  doc.text(`valid COVID-19 certificate`, {
+    underline: true,
+    link: "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/covid-zertifikat.html",
+    continued: true,
+  });
+
   doc.text(
-    `FCA requires a valid COVID-19 certificate to enter the event venue. The certificate provides documentary evidence that you have had a COVID-19 vaccination, have had and recovered from the disease, or have tested negative. If you are traveling by plane, the airline will very probably require the same kind of documentation. If needed, FCA will support you in receiving a COVID-19 test in Zurich.\n\n\n\n`
+    ` to enter the event venue. The certificate provides documentary evidence that you have had a COVID-19 vaccination, have had and recovered from the disease, or have tested negative. If you are traveling by plane, the airline will very probably require the same kind of documentation. If needed, FCA will support you in receiving a COVID-19 test in Zurich.\n\n\n\n`,
+    {
+      underline: false,
+    }
   );
 
   boldFont({ doc, config, text: config.workshop ? 10 : 8 });
