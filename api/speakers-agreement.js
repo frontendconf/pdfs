@@ -286,8 +286,8 @@ If any third party claims that the use of the ${
       "departure",
       doc.x,
       doc.y -
-        (config.workshop ? 9 : 6) * doc.currentLineHeight(true) -
-        (config.workshop ? 12 : 5),
+        (config.workshop ? 10 : 7) * doc.currentLineHeight(true) -
+        (config.workshop ? 15 : 8),
       150,
       fieldHeight,
       {
@@ -348,7 +348,7 @@ If you must cancel your appearance at the Event, you agree that you will notify 
   });
 
   doc.text(
-    ` to enter the event venue. Please reach out to us if you need any assistance related to the certificate.\n\n\n\n`,
+    ` to enter the event venue. Please reach out to us if you need any assistance related to the certificate.\n\n${ config.origin !== "Zurich" || config.workshop ? `` : `\n\n`}`,
     {
       underline: false,
     }
