@@ -270,7 +270,7 @@ If any third party claims that the use of the ${
         : `and (ii)`
     } a compensation for the Presentation of ${
       config.compensation
-    } CHF (Swiss Francs)${
+    } CHF (Swiss Francs) when presenting in person at the conference venue${
       config.workshop
         ? `; (${
             config.origin !== "Zurich" ? "iv" : "iii"
@@ -348,7 +348,7 @@ If you must cancel your appearance at the Event, you agree that you will notify 
   });
 
   doc.text(
-    ` to enter the event venue. The certificate provides documentary evidence that you have had a COVID-19 vaccination, have had and recovered from the disease, or have tested negative. If you are traveling by plane, the airline will very probably require the same kind of documentation. If needed, FCA will support you in receiving a COVID-19 test in Zurich.\n\n\n\n`,
+    ` to enter the event venue. Please reach out to us if you need any assistance related to the certificate.\n\n\n\n`,
     {
       underline: false,
     }
