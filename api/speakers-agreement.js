@@ -24,30 +24,52 @@ const speakersAgreementFields = [
     label: "Deadline",
     type: "date",
     name: "deadline",
-    value: getFormattedDate(10)
+    value: getFormattedDate(10),
   },
   {
     label: "Duration [min]",
     type: "select",
     name: "duration",
-    options: [{ label: 20 }, { label: 30 }, { label: 40 }, { label: 45, relation: ['workshopOnly', ''] }]
+    options: [
+      { label: 20 },
+      { label: 30 },
+      { label: 40 },
+      { label: 45, relation: ["workshopOnly", ""] },
+    ],
   },
-  { label: "Compensation [CHF]", type: "number", name: "compensation", relation: ['workshopOnly', ''] },
+  {
+    label: "Compensation [CHF]",
+    type: "number",
+    name: "compensation",
+    relation: ["workshopOnly", ""],
+  },
   {
     label: "Origin",
     type: "select",
     name: "origin",
-    options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Zurich" }]
+    options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Zurich" }],
   },
   { label: "Workshop", type: "checkbox", name: "workshop", value: true },
-  { label: "Half-day workshop", type: "checkbox", name: "workshopHalfDay", value: true, relation: ['workshop', 'true'] },
-  { label: "Workshop only (no talk)", type: "checkbox", name: "workshopOnly", value: true, relation: ['workshop', 'true'] },
+  {
+    label: "Half-day workshop",
+    type: "checkbox",
+    name: "workshopHalfDay",
+    value: true,
+    relation: ["workshop", "true"],
+  },
+  {
+    label: "Workshop only (no talk)",
+    type: "checkbox",
+    name: "workshopOnly",
+    value: true,
+    relation: ["workshop", "true"],
+  },
   {
     label: "Contact",
     type: "email",
     name: "contact",
-    value: "NAME@frontconference.com"
-  }
+    value: "NAME@frontconference.com",
+  },
 ];
 
 /**
@@ -76,7 +98,7 @@ function boldFont({ doc, config, text, textOptions } = options) {
     text,
     merge(
       {
-        continued: true
+        continued: true,
       },
       textOptions
     )
@@ -124,8 +146,8 @@ ${config.contact} latest until ${config.deadline}.\n\n\n`,
 
     textOptions: {
       continued: false,
-      align: "center"
-    }
+      align: "center",
+    },
   });
 
   resetFont({ doc, config });
@@ -135,8 +157,10 @@ ${config.contact} latest until ${config.deadline}.\n\n\n`,
       config.date
     } (the "Event").\n
 This consent form (the "Consent") will serve as our agreement concerning your participation at the Event with ${
-      config.workshop ? `a Workshop (the "Workshop")${config.workshopOnly ? '' : ` and `}` : ""
-    }${config.workshopOnly ? '' : `a Presentation (the "Presentation")`}.\n\n\n`
+      config.workshop
+        ? `a Workshop (the "Workshop")${config.workshopOnly ? "" : ` and `}`
+        : ""
+    }${config.workshopOnly ? "" : `a Presentation (the "Presentation")`}.\n\n\n`
   );
 
   if (config.workshop) {
@@ -145,8 +169,8 @@ This consent form (the "Consent") will serve as our agreement concerning your pa
       config,
       text: "Workshop\n",
       textOptions: {
-        continued: false
-      }
+        continued: false,
+      },
     });
 
     doc.text(
@@ -161,7 +185,7 @@ Title:`
       fieldWidth,
       fieldHeight,
       {
-        borderColor: "red"
+        borderColor: "red",
       }
     );
 
@@ -177,8 +201,8 @@ Duration:             ${config.workshopHalfDay ? 4 : 8} hours\n\n\n`
       config,
       text: "Presentation\n",
       textOptions: {
-        continued: false
-      }
+        continued: false,
+      },
     });
 
     doc.text(
@@ -193,7 +217,7 @@ Title:`
       fieldWidth,
       fieldHeight,
       {
-        borderColor: "red"
+        borderColor: "red",
       }
     );
 
@@ -291,7 +315,7 @@ If any third party claims that the use of the ${
       150,
       fieldHeight,
       {
-        borderColor: "red"
+        borderColor: "red",
       }
     );
   }
@@ -314,7 +338,8 @@ If any third party claims that the use of the ${
 
   doc.text(
     `. FCA and the Event are ran by web professionals in their spare time without any financial incentive. These circumstances complicate finding replacements, if a speaker cancels their participation at the Event on a short notice, and exacerbate thereby incurred expenses.\n
-If you must cancel your appearance at the Event, you agree that you will notify FCA at least 60 days prior to the date of the first day of the conference. In the event that you fail to appear or perform pursuant to the terms of this agreement, you understand that you shall be responsible for payment of all damages, costs and expenses incurred by FCA by reason of such failure to appear. Cancellations due to illness or accident are exempted.\n\n`);
+If you must cancel your appearance at the Event, you agree that you will notify FCA at least 60 days prior to the date of the first day of the conference. In the event that you fail to appear or perform pursuant to the terms of this agreement, you understand that you shall be responsible for payment of all damages, costs and expenses incurred by FCA by reason of such failure to appear. Cancellations due to illness or accident are exempted.\n\n`
+  );
 
   doc.text(
     `If you are unable to travel for other reasons, including reasons related to the COVID-19 pandemic, FCA might exceptionally agree to hold your talk remotely and stream it live in the conference venue. In the case of a remote talk, the compensation specified under point 6 will be reduced by up to 50%.\n\n`
@@ -329,7 +354,8 @@ If you must cancel your appearance at the Event, you agree that you will notify 
 
   doc.text(`See official rules about entering Switzerland`, {
     underline: true,
-    link: "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/empfehlungen-fuer-reisende/quarantaene-einreisende.html",
+    link:
+      "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/empfehlungen-fuer-reisende/quarantaene-einreisende.html",
     continued: true,
   });
 
@@ -343,12 +369,15 @@ If you must cancel your appearance at the Event, you agree that you will notify 
 
   doc.text(`valid COVID-19 certificate`, {
     underline: true,
-    link: "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/covid-zertifikat.html",
+    link:
+      "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/covid-zertifikat.html",
     continued: true,
   });
 
   doc.text(
-    ` to enter the event venue. Please reach out to us if you need any assistance related to the certificate.\n\n${ config.origin !== "Zurich" || config.workshop ? `` : `\n\n`}`,
+    ` to enter the event venue. Please reach out to us if you need any assistance related to the certificate.\n\n${
+      config.origin !== "Zurich" || config.workshop ? `` : `\n\n`
+    }`,
     {
       underline: false,
     }
@@ -371,7 +400,7 @@ If you must cancel your appearance at the Event, you agree that you will notify 
     fieldWidth,
     fieldHeight,
     {
-      borderColor: "red"
+      borderColor: "red",
     }
   );
 
@@ -384,7 +413,7 @@ If you must cancel your appearance at the Event, you agree that you will notify 
     fieldWidth,
     fieldHeight,
     {
-      borderColor: "red"
+      borderColor: "red",
     }
   );
 
@@ -401,8 +430,8 @@ If you must cancel your appearance at the Event, you agree that you will notify 
       value: getFormattedDate(),
       format: {
         type: "date",
-        param: "yyyy-mm-dd"
-      }
+        param: "yyyy-mm-dd",
+      },
     }
   );
 
@@ -446,7 +475,7 @@ function insertHeader({ doc, config } = options) {
     .fontSize(25)
     .text(text, doc.x, offsetY, {
       align: "center",
-      continued: true
+      continued: true,
     });
 
   doc.fontSize(config.font.size);
@@ -469,7 +498,7 @@ function insertFooter({ doc, config, pages } = options) {
 
   doc.text(text, doc.x, offsetY, {
     align: "center",
-    height: 0
+    height: 0,
   });
 }
 
@@ -508,23 +537,23 @@ function speakersAgreement(options = {}) {
       title,
       meta: {
         title,
-        author: "Front Conference Zurich"
+        author: "Front Conference Zurich",
       },
       pdf: {
         margins: {
           top: 180,
           topHeader: 40,
-          bottom: 80
-        }
+          bottom: 80,
+        },
       },
       font: {
         family: "Helvetica",
-        size: 12
+        size: 12,
       },
       logo: {
         path: readFileSync(resolve(__dirname, "../public/logo.svg"), "utf8"),
-        size: 63
-      }
+        size: 63,
+      },
     },
     options
   );
@@ -537,7 +566,7 @@ function speakersAgreement(options = {}) {
       deadline: ow.string.not.empty,
       duration: ow.any(ow.string.not.empty, ow.number),
       compensation: ow.any(ow.string.not.empty, ow.number, ow.null),
-      contact: ow.string.not.empty
+      contact: ow.string.not.empty,
     })
   );
 
@@ -545,7 +574,7 @@ function speakersAgreement(options = {}) {
     ...config,
     insertContent,
     insertHeader,
-    insertFooter
+    insertFooter,
   });
 }
 
