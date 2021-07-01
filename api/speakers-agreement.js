@@ -115,6 +115,9 @@ function boldFont({ doc, config, text, textOptions } = options) {
  * @param {string} options.text Text to insert
  */
 function insertContent({ doc, config } = options) {
+  const isFromOverseas = ["Overseas", "USA"].includes(config.origin);
+  const isLocal = ["Switzerland", "Zurich"].includes(config.origin);
+
   // Meta
   doc.info["Title"] = config.meta.title;
   doc.info["Author"] = config.meta.author;
@@ -276,7 +279,7 @@ If any third party claims that the use of the ${
 
   let nights = 3;
 
-  if (config.origin === "Overseas") {
+  if (isFromOverseas) {
     nights = 5;
   }
 
@@ -286,7 +289,7 @@ If any third party claims that the use of the ${
 
   doc.text(
     `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; ${
-      config.origin !== "Zurich"
+      !isLocal
         ? `(ii) accommodation at a hotel booked by FCA for up to ${nights} nights; (iii) a round trip economy class airline ticket from${
             config.workshop ? "" : `\n`
           }
@@ -297,7 +300,7 @@ If any third party claims that the use of the ${
     } CHF (Swiss Francs) when presenting in person at the conference venue${
       config.workshop
         ? `; (${
-            config.origin !== "Zurich" ? "iv" : "iii"
+            !isLocal ? "iv" : "iii"
           }) 50% of the Workshop profits, with the expenses deducted from the Workshop tickets revenue including: rental of the workshop venue, lunch and refreshments for attendees, the commission to the ticket sales platform, and costs incurred with the marketing and promotion`
         : ""
     }. The financial compensation related to ${
@@ -305,7 +308,7 @@ If any third party claims that the use of the ${
     }Presentation will be paid to you within 60 days after the conference pursuant to providing an invoice to FCA’ s accounting department, including wire transfer details or other means of payment.\n\n`
   );
 
-  if (config.origin !== "Zurich") {
+  if (!isLocal) {
     doc.formText(
       "departure",
       doc.x,
@@ -376,7 +379,7 @@ If you must cancel your appearance at the Event, you agree that you will notify 
 
   doc.text(
     ` to enter the event venue. Please reach out to us if you need any assistance related to the certificate.\n\n${
-      config.origin !== "Zurich" || config.workshop ? `` : `\n\n`
+      !isLocal || config.workshop ? `` : `\n\n`
     }`,
     {
       underline: false,
