@@ -290,10 +290,9 @@ If any third party claims that the use of the ${
   doc.text(
     `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; ${
       !isLocal
-        ? `(ii) accommodation at a hotel booked by FCA for up to ${nights} nights; (iii) a round trip economy class airline ticket from${
-            config.workshop ? "" : `\n`
-          }
-                                               to Zurich booked by FCA; and (iv)`
+        ? `(ii) accommodation at a hotel booked by FCA for up to ${nights} nights; (iii) a round trip economy class airline ticket from
+                                               to Zurich booked by FCA, or a round trip train ticket from
+                                               to Zurich booked by you and invoiced to FCA; and (iv)`
         : `and (ii)`
     } a compensation for the Presentation of ${
       config.compensation
@@ -313,8 +312,21 @@ If any third party claims that the use of the ${
       "departure",
       doc.x,
       doc.y -
+        (config.workshop ? 11 : 8) * doc.currentLineHeight(true) -
+        (config.workshop ? 20 : 12),
+      150,
+      fieldHeight,
+      {
+        borderColor: "red",
+      }
+    );
+
+    doc.formText(
+      "departureTrain",
+      doc.x,
+      doc.y -
         (config.workshop ? 10 : 7) * doc.currentLineHeight(true) -
-        (config.workshop ? 15 : 8),
+        (config.workshop ? 17 : 9),
       150,
       fieldHeight,
       {
