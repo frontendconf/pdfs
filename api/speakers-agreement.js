@@ -242,8 +242,8 @@ For this purpose, you agree to provide FCA and grant FCA the right to use ${
   boldFont({ doc, config, text: 2 });
 
   doc.text(
-    `. FCA supports the spread of fresh ideas and practices around Technology and Design by making presentations freely and widely available to a broad audience. For this purpose, all presentations held at the Event are streamed live, and recorded for further display on FCA’s Vimeo channel, on FCA’s website or other video distribution channels.\n
-You grant FCA and other entities — e.g., broadcasters — the right to record, stream, film and photograph your Presentation at the Event and to distribute, broadcast, edit, translate or otherwise disseminate it, without any further approval from you, in whole or in part, throughout the world, in perpetuity, in any and all media now known or hereafter developed. This grant to the FCA includes, but is not limited to, the right to use the Presentation either alone or together with Supporting Information. \n\n`
+    `. FCA supports the spread of fresh ideas and practices around Technology and Design by making presentations freely and widely available to a broad audience. For this purpose, all presentations held at the Event could be streamed live, and recorded for further display on FCA’s Vimeo channel, on FCA’s website or other video distribution channels (collectively, “Distribution Channels”).\n
+You grant FCA and other entities — e.g., broadcasters — the right to record, stream, film and photograph your Presentation at the Event and to distribute, broadcast, edit, translate or otherwise disseminate it, without any further approval from you, in whole or in part, throughout the world, in perpetuity, in any and all media now known or hereafter developed. This grant to the FCA includes the right to use the Presentation either alone or together with Supporting Information. This grant to the FCA does not include the Workshop.\n\n`
   );
 
   boldFont({ doc, config, text: 3 });
@@ -255,7 +255,7 @@ You grant FCA and other entities — e.g., broadcasters — the right to record,
   boldFont({ doc, config, text: 4 });
 
   doc.text(
-    `. In addition, you understand and agree that: (i) FCA isn’t obligated to use the Presentation or Supporting Information in any way; (ii) you won’t receive any form of payment in connection with the use of the Presentation and/or Supporting Information.\n\n`
+    `. In addition, you understand and agree that: (i) FCA isn’t obligated to use the Presentation or Supporting Information in any way; (ii) you won’t receive any form of payment in connection with the use of the Presentation and/or Supporting Information as long as FCA makes available the Presentation and/or Supporting Information on Distribution Channels free of charge. Shall FCA begin to charge for the distribution of the Presentation on Distribution Channels, FCA will inform you and discuss with you the terms of such distribution.\n\n`
   );
 
   boldFont({ doc, config, text: 5 });
@@ -345,7 +345,7 @@ If any third party claims that the use of the ${
     boldFont({ doc, config, text: 8 });
 
     doc.text(
-      `. Shall further Workshops with private companies be organised, you agree that a separate financial agreement will be discussed with FCA.\n\n`
+      `. Shall you organize further Workshops in Switzerland in the period starting one week before the Event and ending one week after the Event, you agree that you will inform FCA and that you will discuss a separate financial agreement with FCA.\n\n`
     );
 
     boldFont({ doc, config, text: 9 });
