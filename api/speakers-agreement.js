@@ -288,23 +288,29 @@ If any third party claims that the use of the ${
   }
 
   doc.text(
-    `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; ${
+    `. You acknowledge and agree that the only considerations you will receive in connection with this Consent are: (i) the speaking opportunity provided to you by FCA; (ii) ${
       !isLocal
-        ? `(ii) accommodation at a hotel booked by FCA for up to ${nights} nights; (iii) a round trip economy class airline ticket from
+        ? `accommodation at a hotel booked by FCA for up to ${nights} nights; (iii) a round trip economy class airline ticket from
                                                to Zurich booked by FCA, or a round trip train ticket from
-                                               to Zurich booked by you and invoiced to FCA; and (iv)`
-        : `and (ii)`
-    } a compensation for the Presentation of ${
-      config.compensation
-    } CHF (Swiss Francs) when presenting in person at the conference venue${
+                                               to Zurich booked by you and invoiced to FCA; (iv) `
+        : ``
+    }${
+      config.workshopOnly
+        ? ""
+        : `a compensation for the Presentation of ${config.compensation} CHF (Swiss Francs) when presenting in person at the conference venue`
+    }${
       config.workshop
-        ? `; (${
-            !isLocal ? "iv" : "iii"
-          }) 50% of the Workshop profits, with the expenses deducted from the Workshop tickets revenue including: rental of the workshop venue, lunch and refreshments for attendees, the commission to the ticket sales platform, and costs incurred with the marketing and promotion`
+        ? `${
+            config.workshopOnly ? "" : `; ${!isLocal ? `(v) ` : `(iii) `}`
+          }50% of the Workshop profits, with the expenses deducted from the Workshop tickets revenue including: rental of the workshop venue, lunch and refreshments for attendees, the commission to the ticket sales platform, and costs incurred with the marketing and promotion`
         : ""
-    }. The financial compensation related to ${
-      config.workshop ? "Workshop and " : ""
-    }Presentation will be paid to you within 60 days after the conference pursuant to providing an invoice to FCA’ s accounting department, including wire transfer details or other means of payment.\n\n`
+    }. The financial compensation related to the ${
+      config.workshopOnly
+        ? "Workskop"
+        : config.workshop
+        ? "Workshop and Presentation"
+        : "Presentation"
+    } will be paid to you within 60 days after the conference pursuant to providing an invoice to FCA’ s accounting department, including wire transfer details or other means of payment.\n\n`
   );
 
   if (!isLocal) {
@@ -312,8 +318,9 @@ If any third party claims that the use of the ${
       "departure",
       doc.x,
       doc.y -
-        (config.workshop ? 11 : 8) * doc.currentLineHeight(true) -
-        (config.workshop ? 20 : 12),
+        (config.workshop ? (config.workshopOnly ? 9 : 11) : 8) *
+          doc.currentLineHeight(true) -
+        (config.workshop ? (config.workshopOnly ? 14 : 20) : 12),
       150,
       fieldHeight,
       {
@@ -325,8 +332,9 @@ If any third party claims that the use of the ${
       "departureTrain",
       doc.x,
       doc.y -
-        (config.workshop ? 10 : 7) * doc.currentLineHeight(true) -
-        (config.workshop ? 17 : 9),
+        (config.workshop ? (config.workshopOnly ? 8 : 10) : 7) *
+          doc.currentLineHeight(true) -
+        (config.workshop ? (config.workshopOnly ? 11 : 17) : 9),
       150,
       fieldHeight,
       {
