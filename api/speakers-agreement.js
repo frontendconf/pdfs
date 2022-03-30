@@ -79,10 +79,7 @@ const speakersAgreementFields = [
  * @param {object} options.config See speakersAgreement function
  */
 function resetFont({ doc, config } = options) {
-  doc
-    .font(config.font.family)
-    .fontSize(config.font.size)
-    .fillColor("black");
+  doc.font(config.font.family).fontSize(config.font.size).fillColor("black");
 }
 
 /**
@@ -375,10 +372,9 @@ If you must cancel your appearance at the Event, you agree that you will notify 
     }
   );
 
-  doc.text(`See official rules about entering Switzerland`, {
+  doc.text(`Check possible restrictions when entering Switzerland`, {
     underline: true,
-    link:
-      "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/empfehlungen-fuer-reisende/quarantaene-einreisende.html",
+    link: "https://travelcheck.admin.ch",
     continued: true,
   });
 
