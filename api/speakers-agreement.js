@@ -532,8 +532,8 @@ function insertFooter({ doc, config, pages } = options) {
  * @param {string|number} options.compensation Speaker compensation
  * @param {string|boolean} options.workshop Whether there will be an additional workshop
  * @param {string} options.contact E-mail contact to return form to
- * @param {string} [options.date="26 - 27 August 2021"] Conference date
- * @param {string} [options.dateWorkshop="25 August 2021"] Workshop date
+ * @param {string} [options.date="25 - 26 August 2022"] Conference date
+ * @param {string} [options.dateWorkshop="24 August 2022"] Workshop date
  * @param {string} [options.title="Presentation Consent Form"] Title
  * @param {object} [options.meta] Added to PDF meta data
  * @param {string} [options.meta.title]
@@ -555,8 +555,8 @@ function speakersAgreement(options = {}) {
       compensation: null,
       workshop: false,
       contact: null,
-      date: "26 - 27 August 2021",
-      dateWorkshop: "25 August 2021",
+      date: "25 - 26 August 2022",
+      dateWorkshop: "24 August 2022",
       title,
       meta: {
         title,
