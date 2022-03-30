@@ -382,30 +382,6 @@ If you must cancel your appearance at the Event, you agree that you will notify 
     continued: true,
   });
 
-  doc.text(`.\n\n`, {
-    underline: false,
-  });
-
-  doc.text(`FCA requires a `, {
-    continued: true,
-  });
-
-  doc.text(`valid COVID-19 certificate`, {
-    underline: true,
-    link:
-      "https://www.bag.admin.ch/bag/en/home/krankheiten/ausbrueche-epidemien-pandemien/aktuelle-ausbrueche-epidemien/novel-cov/covid-zertifikat.html",
-    continued: true,
-  });
-
-  doc.text(
-    ` to enter the event venue. Please reach out to us if you need any assistance related to the certificate.\n\n${
-      !isLocal || config.workshop ? `` : `\n\n`
-    }`,
-    {
-      underline: false,
-    }
-  );
-
   boldFont({ doc, config, text: config.workshop ? 10 : 8 });
 
   doc.text(
