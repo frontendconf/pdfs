@@ -387,7 +387,7 @@ If you must cancel your appearance at the Event, you agree that you will notify 
   doc.text(
     `. This Consent contains the entire understanding between you and FCA regarding the ${
       config.workshop ? "Workshop and " : ""
-    }Presentation and Supporting Information and may not be modified except in a writing signed by both parties.\n\n`
+    }Presentation and Supporting Information and may not be modified except in a writing signed by both parties.\n\n\n\n`
   );
 
   doc.text(`\nName:`);
