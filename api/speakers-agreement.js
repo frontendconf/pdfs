@@ -255,7 +255,7 @@ You grant FCA and other entities — e.g., broadcasters — the right to record,
   boldFont({ doc, config, text: 4 });
 
   doc.text(
-    `. In addition, you understand and agree that: (i) FCA isn’t obligated to use the Presentation or Supporting Information in any way; (ii) you won’t receive any form of payment in connection with the use of the Presentation and/or Supporting Information as long as FCA makes available the Presentation and/or Supporting Information on Distribution Channels free of charge. Shall FCA begin to charge for the distribution of the Presentation on Distribution Channels, FCA will inform you and discuss with you the terms of such distribution.\n\n`
+    `. In addition, you understand and agree that: (i) FCA isn’t obligated to use the Presentation or Supporting Information in any way; (ii) you won’t receive any form of payment in connection with the use of the Presentation and/or Supporting Information.\n\n`
   );
 
   boldFont({ doc, config, text: 5 });
