@@ -378,6 +378,10 @@ If you must cancel your appearance at the Event, you agree that you will notify 
     continued: true,
   });
 
+  doc.text(`.\n\n`, {
+    underline: false,
+  });
+
   boldFont({ doc, config, text: config.workshop ? 10 : 8 });
 
   doc.text(
