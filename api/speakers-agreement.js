@@ -21,12 +21,6 @@ function getFormattedDate(daysFromToday = 0) {
 
 const speakersAgreementFields = [
   {
-    label: "Deadline",
-    type: "date",
-    name: "deadline",
-    value: getFormattedDate(10),
-  },
-  {
     label: "Duration [min]",
     type: "select",
     name: "duration",
@@ -63,13 +57,7 @@ const speakersAgreementFields = [
     name: "workshopOnly",
     value: true,
     relation: ["workshop", "true"],
-  },
-  {
-    label: "Contact",
-    type: "email",
-    name: "contact",
-    value: "NAME@frontconference.com",
-  },
+  }
 ];
 
 /**
@@ -132,25 +120,9 @@ function insertContent({ doc, config } = options) {
 
   const contentWidth =
     doc.page.width - doc.page.margins.left - doc.page.margins.right;
-  const fieldOffset = 90;
+  const fieldOffset = 85;
   const fieldWidth = contentWidth - fieldOffset;
   const fieldHeight = 16;
-
-  doc.fillColor("#300888").fontSize(11);
-
-  boldFont({
-    doc,
-    config,
-    text: `Please complete this form, make copies for your records and email it to
-${config.contact} latest until ${config.deadline}.\n\n\n`,
-
-    textOptions: {
-      continued: false,
-      align: "center",
-    },
-  });
-
-  resetFont({ doc, config });
 
   doc.text(
     `The Frontend Conference Association ("FCA") is organizing the Front Conference Zurich event to be held ${
@@ -318,7 +290,7 @@ If any third party claims that the use of the ${
         (config.workshop ? (config.workshopOnly ? 9 : 11) : 8) *
           doc.currentLineHeight(true) -
         (config.workshop ? (config.workshopOnly ? 14 : 20) : 12),
-      150,
+      140,
       fieldHeight,
       {
         borderColor: "red",
@@ -332,7 +304,7 @@ If any third party claims that the use of the ${
         (config.workshop ? (config.workshopOnly ? 8 : 10) : 7) *
           doc.currentLineHeight(true) -
         (config.workshop ? (config.workshopOnly ? 11 : 17) : 9),
-      150,
+      140,
       fieldHeight,
       {
         borderColor: "red",
@@ -503,11 +475,9 @@ function insertFooter({ doc, config, pages } = options) {
 
 /**
  * Generate speakers agreement PDF
- * @param {string} options.deadline Until when to return the form
  * @param {string|number} options.duration Talk duration
  * @param {string|number} options.compensation Speaker compensation
  * @param {string|boolean} options.workshop Whether there will be an additional workshop
- * @param {string} options.contact E-mail contact to return form to
  * @param {string} [options.date="25 - 26 August 2022"] Conference date
  * @param {string} [options.dateWorkshop="24 August 2022"] Workshop date
  * @param {string} [options.title="Presentation Consent Form"] Title
@@ -526,11 +496,9 @@ function speakersAgreement(options = {}) {
     : "Presentation Consent Form";
   const config = merge(
     {
-      deadline: null,
       duration: null,
       compensation: null,
       workshop: false,
-      contact: null,
       date: "25 - 26 August 2022",
       dateWorkshop: "24 August 2022",
       title,
@@ -547,7 +515,7 @@ function speakersAgreement(options = {}) {
       },
       font: {
         family: "Helvetica",
-        size: 12,
+        size: 11,
       },
       logo: {
         path: readFileSync(resolve(__dirname, "../public/logo.svg"), "utf8"),
@@ -562,10 +530,8 @@ function speakersAgreement(options = {}) {
   ow(
     config,
     ow.object.partialShape({
-      deadline: ow.string.not.empty,
       duration: ow.any(ow.string.not.empty, ow.number),
       compensation: ow.any(ow.string.not.empty, ow.number, ow.null),
-      contact: ow.string.not.empty,
     })
   );
 
