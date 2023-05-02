@@ -212,19 +212,19 @@ For this purpose, you agree to provide FCA and grant FCA the right to use ${
 
   doc.text(
     `. FCA supports the spread of fresh ideas and practices around Technology and Design by making presentations freely and widely available to a broad audience. For this purpose, all presentations held at the Event could be streamed live, and recorded for further display on FCA's Vimeo channel, on FCA's website or other video distribution channels (collectively, “Distribution Channels”).\n
-You grant FCA and other entities — e.g., broadcasters — the right to record, stream, film and photograph your Presentation at the Event and to distribute, broadcast, edit, translate or otherwise disseminate it, without any further approval from you, in whole or in part, throughout the world, in perpetuity, in any and all media now known or hereafter developed. This grant to the FCA includes the right to use the Presentation either alone or together with Supporting Information. This grant to the FCA does not include the Workshop.\n\n`
+You grant FCA and other entities — e.g., broadcasters — the right to record, stream, film and photograph your Presentation at the Event (resulting in, collectively, "Records") and to distribute, broadcast, edit, translate or otherwise disseminate these Records, without any further approval from you, in whole or in part, throughout the world, in perpetuity, in any and all media now known or hereafter developed. This grant to the FCA includes the right to use the Records of your Presentation either alone or together with Supporting Information. This grant to the FCA does not include the Workshop.\n\n`
   );
 
   boldFont({ doc, config, text: 3 });
 
   doc.text(
-    `. FCA encourages intelligent public debate around each presentation. Accordingly, your Presentation may be distributed under a "Creative Commons" license, which allows each distributed presentation to be re-published in noncommercial, non-derivative works, as long as appropriate credit is given and the presentation is not edited or distorted. By signing this Consent, you acknowledge and agree that you do not object to the distribution of the Presentation by the FCA under a Creative Commons license. \n\n`
+    `. FCA encourages intelligent public debate around each presentation. Accordingly, the Records of your Presentation may be distributed under a "Creative Commons" license, which allows each distributed Record to be re-published in noncommercial, non-derivative works, as long as appropriate credit is given and the Record is not edited or distorted. By signing this Consent, you acknowledge and agree that you do not object to the distribution of the Records by the FCA under a Creative Commons license. \n\n`
   );
 
   boldFont({ doc, config, text: 4 });
 
   doc.text(
-    `. In addition, you understand and agree that: (i) FCA isn't obligated to use the Presentation or Supporting Information in any way; (ii) you won't receive any form of payment in connection with the use of the Presentation and/or Supporting Information.\n\n`
+    `. In addition, you understand and agree that: (i) FCA isn't obligated to use the Records of your Presentation or Supporting Information in any way; (ii) you won't receive any form of payment in connection with the use of the Records of your Presentation and/or Supporting Information.\n\n`
   );
 
   boldFont({ doc, config, text: 5 });
