@@ -202,7 +202,7 @@ Duration:             ${config.duration} minutes\n\n\n`
   boldFont({ doc, config, text: 1 });
 
   doc.text(
-    `. FCA will promote workshops and presentations on social media, the Event’s website and other channels.\n
+    `. FCA will promote workshops and presentations on social media, the Event's website and other channels.\n
 For this purpose, you agree to provide FCA and grant FCA the right to use ${
       config.workshop ? "Workshop and " : ""
     }Presentation outlines and supporting information, such as your name, voice, photograph, likeness and biographical data (collectively, "Supporting Information").\n\n`
@@ -211,7 +211,7 @@ For this purpose, you agree to provide FCA and grant FCA the right to use ${
   boldFont({ doc, config, text: 2 });
 
   doc.text(
-    `. FCA supports the spread of fresh ideas and practices around Technology and Design by making presentations freely and widely available to a broad audience. For this purpose, all presentations held at the Event could be streamed live, and recorded for further display on FCA’s Vimeo channel, on FCA’s website or other video distribution channels (collectively, “Distribution Channels”).\n
+    `. FCA supports the spread of fresh ideas and practices around Technology and Design by making presentations freely and widely available to a broad audience. For this purpose, all presentations held at the Event could be streamed live, and recorded for further display on FCA's Vimeo channel, on FCA's website or other video distribution channels (collectively, “Distribution Channels”).\n
 You grant FCA and other entities — e.g., broadcasters — the right to record, stream, film and photograph your Presentation at the Event and to distribute, broadcast, edit, translate or otherwise disseminate it, without any further approval from you, in whole or in part, throughout the world, in perpetuity, in any and all media now known or hereafter developed. This grant to the FCA includes the right to use the Presentation either alone or together with Supporting Information. This grant to the FCA does not include the Workshop.\n\n`
   );
 
@@ -224,7 +224,7 @@ You grant FCA and other entities — e.g., broadcasters — the right to record,
   boldFont({ doc, config, text: 4 });
 
   doc.text(
-    `. In addition, you understand and agree that: (i) FCA isn’t obligated to use the Presentation or Supporting Information in any way; (ii) you won’t receive any form of payment in connection with the use of the Presentation and/or Supporting Information.\n\n`
+    `. In addition, you understand and agree that: (i) FCA isn't obligated to use the Presentation or Supporting Information in any way; (ii) you won't receive any form of payment in connection with the use of the Presentation and/or Supporting Information.\n\n`
   );
 
   boldFont({ doc, config, text: 5 });
@@ -279,7 +279,7 @@ If any third party claims that the use of the ${
         : config.workshop
         ? "Workshop and Presentation"
         : "Presentation"
-    } will be paid to you within 60 days after the conference pursuant to providing an invoice to FCA’ s accounting department, including wire transfer details or other means of payment.\n\n`
+    } will be paid to you within 60 days after the conference pursuant to providing an invoice to FCA' s accounting department, including wire transfer details or other means of payment.\n\n`
   );
 
   if (!isLocal) {
