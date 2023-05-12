@@ -41,7 +41,7 @@ const speakersAgreementFields = [
     label: "Origin",
     type: "select",
     name: "origin",
-    options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Zurich" }],
+    options: [{ label: "Overseas" }, { label: "Europe" }, { label: "Switzerland" }],
   },
   { label: "Workshop", type: "checkbox", name: "workshop", value: true },
   {
@@ -101,7 +101,7 @@ function boldFont({ doc, config, text, textOptions } = options) {
  */
 function insertContent({ doc, config } = options) {
   const isFromOverseas = ["Overseas", "USA"].includes(config.origin);
-  const isLocal = ["Switzerland", "Zurich"].includes(config.origin);
+  const isLocal = ["Switzerland"].includes(config.origin);
 
   // Meta
   doc.info["Title"] = config.meta.title;
