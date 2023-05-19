@@ -245,6 +245,10 @@ If any third party claims that the use of the ${
     }Presentation violates its rights, you agree to cooperate fully with FCA to defend against or otherwise respond to such claim. \n\n`
   );
 
+  if (config.workshop && !config.workshopOnly) {
+    doc.text(`\n\n\n\n\n`);
+  }
+
   boldFont({ doc, config, text: 6 });
 
   let nights = 3;
