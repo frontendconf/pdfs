@@ -292,7 +292,7 @@ If any third party claims that the use of the ${
       "departure",
       doc.x,
       doc.y -
-        (config.workshop ? (config.workshopOnly ? 9 : 11) : 8) *
+        (config.workshop ? (config.workshopOnly ? 9 : 10) : 8) *
           doc.currentLineHeight(true) -
         (config.workshop ? (config.workshopOnly ? 14 : 20) : 12),
       140,
@@ -306,7 +306,7 @@ If any third party claims that the use of the ${
       "departureTrain",
       doc.x,
       doc.y -
-        (config.workshop ? (config.workshopOnly ? 8 : 10) : 7) *
+        (config.workshop ? (config.workshopOnly ? 8 : 9) : 7) *
           doc.currentLineHeight(true) -
         (config.workshop ? (config.workshopOnly ? 11 : 17) : 9),
       140,
