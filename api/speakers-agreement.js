@@ -28,8 +28,9 @@ const speakersAgreementFields = [
       { label: 20 },
       { label: 30 },
       { label: 40 },
-      { label: 45, relation: ["workshopOnly", ""] },
+      { label: 45 },
     ],
+    relation: ["workshopOnly", ""],
   },
   {
     label: "Compensation [CHF]",
