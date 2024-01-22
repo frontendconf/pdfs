@@ -8,7 +8,7 @@
     "test": "ava"
   },
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,7 @@
     "ava": "^3.2.0",
     "prettier": "^2.3.2",
     "pretty-quick": "^3.1.1",
-    "vercel": "^23.0.1"
+    "vercel": "^33.2.0"
   },
   "husky": {
     "hooks": {
