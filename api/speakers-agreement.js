@@ -343,21 +343,8 @@ If you must cancel your appearance at the Event, you agree that you will notify 
   );
 
   doc.text(
-    `If you are travelling from abroad, it is your responsibility to ensure that you meet all the requirements to enter Switzerland. `,
-    {
-      continued: true,
-    }
+    `If you are travelling from abroad, it is your responsibility to ensure that you meet all the requirements to enter Switzerland.\n\n`
   );
-
-  doc.text(`Check possible restrictions when entering Switzerland`, {
-    underline: true,
-    link: "https://travelcheck.admin.ch",
-    continued: true,
-  });
-
-  doc.text(`.\n\n`, {
-    underline: false,
-  });
 
   boldFont({ doc, config, text: config.workshop ? 10 : 8 });
 
